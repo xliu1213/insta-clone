@@ -1,5 +1,5 @@
 import { Box, Flex, Link, Avatar, Tooltip } from "@chakra-ui/react"
-import { Router, Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { InstagramLogo, InstagramMobileLogo, NotificationsLogo, SearchLogo, CreatePostLogo } from '../../assets/constants'
 import { AiFillHome } from "react-icons/ai"
 import { BiLogOut } from "react-icons/bi"
