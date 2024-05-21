@@ -5,7 +5,7 @@ import PostFooter from "./PostFooter"
 const FeedPost = () => {
   return <>
     <PostHeader />
-    <Box>
+    <Box borderRadius={4} overflow={"hidden"}>
       <Image src="/img1.png" alt="user profile pic" />
     </Box>
     <PostFooter />
