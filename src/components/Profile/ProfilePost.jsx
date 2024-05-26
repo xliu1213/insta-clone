@@ -4,6 +4,7 @@ import { AiFillHeart } from "react-icons/ai"
 import { FaComment } from "react-icons/fa"
 import { MdDelete } from "react-icons/md"
 import Comment from "../Comment/Comment"
+import PostFooter from "../FeedPosts/PostFooter"
 
 const ProfilePost = ({img}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -51,7 +52,21 @@ const ProfilePost = ({img}) => {
                 <Comment createdAt="12h ago" username="abrahmov" profilePic="https://bit.ly/dan-abramov" text={"Nice pic"}/>
                 <Comment createdAt="3h ago" username="kentdodds" profilePic="https://bit.ly/kent-c-dodds" 
                   text={"Good clone dude!"}/>
+                <Comment createdAt="1d ago" username="xiyuan" profilePic="/profilepic.png" text={"Dummy images from unsplash"}/>
+                <Comment createdAt="12h ago" username="abrahmov" profilePic="https://bit.ly/dan-abramov" text={"Nice pic"}/>
+                <Comment createdAt="1d ago" username="xiyuan" profilePic="/profilepic.png" text={"Dummy images from unsplash"}/>
+                <Comment createdAt="12h ago" username="abrahmov" profilePic="https://bit.ly/dan-abramov" text={"Nice pic"}/>
+                <Comment createdAt="1d ago" username="xiyuan" profilePic="/profilepic.png" text={"Dummy images from unsplash"}/>
+                <Comment createdAt="12h ago" username="abrahmov" profilePic="https://bit.ly/dan-abramov" text={"Nice pic"}/>
+                <Comment createdAt="1d ago" username="xiyuan" profilePic="/profilepic.png" text={"Dummy images from unsplash"}/>
+                <Comment createdAt="12h ago" username="abrahmov" profilePic="https://bit.ly/dan-abramov" text={"Nice pic"}/>
+                <Comment createdAt="1d ago" username="xiyuan" profilePic="/profilepic.png" text={"Dummy images from unsplash"}/>
+                <Comment createdAt="12h ago" username="abrahmov" profilePic="https://bit.ly/dan-abramov" text={"Nice pic"}/>
+                <Comment createdAt="1d ago" username="xiyuan" profilePic="/profilepic.png" text={"Dummy images from unsplash"}/>
+                <Comment createdAt="12h ago" username="abrahmov" profilePic="https://bit.ly/dan-abramov" text={"Nice pic"}/>
               </VStack>
+              <Divider my={4} bg={"gray.8000"}/>
+              <PostFooter isProfilePage={true}/>
             </Flex>
           </Flex>
         </ModalBody>
