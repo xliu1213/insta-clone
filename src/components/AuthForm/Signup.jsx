@@ -28,6 +28,9 @@ const Signup = () => {
         </Button>
       </InputRightElement>
     </InputGroup>
+    <Button w={"full"} colorScheme='blue' size={"sm"} fontSize={14}>
+      Sign Up
+    </Button>
   </>
 }
 
