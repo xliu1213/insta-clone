@@ -21,8 +21,11 @@ const useGetUserProfileByUsername = (username) => {
           userDoc = doc.data()
         })
         setUserProfile(userDoc)
+        console.log(userDoc)
       } catch (error) {
         showToast("Error", error.message, "error")
+      } finally {
+        setIsLoading(false)
       }
     }
     getUserProfile()
