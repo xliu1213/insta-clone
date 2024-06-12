@@ -27,6 +27,8 @@ const useGetUserProfileByUsername = (username) => {
     }
     getUserProfile()
   }, [setUserProfile, username, showToast])
+
+  return {isLoading, userProfile}
 }
 
 export default useGetUserProfileByUsername

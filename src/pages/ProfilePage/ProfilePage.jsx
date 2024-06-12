@@ -2,8 +2,13 @@ import { Container, Flex } from "@chakra-ui/react"
 import ProfileHeader from "../../components/Profile/ProfileHeader"
 import ProfileTabs from "../../components/Profile/ProfileTabs"
 import ProfilePosts from "../../components/Profile/ProfilePosts"
+import { useParams } from "react-router-dom"
+import useGetUserProfileByUsername from "../../hooks/useGetUserProfileByUsername"
 
 const ProfilePage = () => {
+  const {username} = useParams()
+  const {isLoading, userProfile} = useGetUserProfileByUsername(username)
+
   return <Container maxW={"container.lg"} py={5}>
     <Flex py={10} px={4} pl={{base:4, md:10}} w={"full"} mx={"auto"} flexDirection={"column"}>
       <ProfileHeader />
