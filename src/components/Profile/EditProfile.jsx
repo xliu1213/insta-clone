@@ -1,6 +1,7 @@
 import { Avatar, Button, Center, FormControl, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, Stack } 
   from "@chakra-ui/react"
 import { useState } from "react"
+import useAuthStore from '../../store/authStore'
 
 const EditProfile = ({isOpen, onClose}) => {
   const [inputs, setInputs] = useState({
@@ -8,6 +9,12 @@ const EditProfile = ({isOpen, onClose}) => {
     username: '',
     bio: ''
   })
+
+  const authUser = useAuthStore(state => state.user)
+
+  const handleEditProfile = () => {
+    console.log(inputs)
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -24,21 +31,23 @@ const EditProfile = ({isOpen, onClose}) => {
             </Stack>
             <FormControl>
               <FormLabel fontSize={"sm"}>Full Name</FormLabel>
-              <Input placeholder="Full Name" size={"sm"} type="text" value={inputs.fullName}
+              <Input placeholder="Full Name" size={"sm"} type="text" value={inputs.fullName || authUser.fullName}
                 onChange={(e) => setInputs({...inputs, fullName: e.target.value})} />
             </FormControl>
             <FormControl>
               <FormLabel fontSize={"sm"}>Username</FormLabel>
-              <Input placeholder="Username" size={"sm"} type="text" value={inputs.username}
+              <Input placeholder="Username" size={"sm"} type="text" value={inputs.username || authUser.username}
                 onChange={(e) => setInputs({...inputs, username: e.target.value})} />
             </FormControl>
             <FormControl>
               <FormLabel fontSize={"sm"}>Bio</FormLabel>
-              <Input placeholder="Bio" size={"sm"} type="text" value={inputs.bio} 
+              <Input placeholder="Bio" size={"sm"} type="text" value={inputs.bio || authUser.bio} 
                 onChange={(e) => setInputs({...inputs, bio: e.target.value})} />
             </FormControl>
             <Stack spacing={6} direction={["column", "row"]}>
-              <Button bg={"red.400"} color={"white"} w={"full"} size={"sm"} _hover={{bg:"red.500"}}>Cancel</Button>
+              <Button bg={"red.400"} color={"white"} w={"full"} size={"sm"} _hover={{bg:"red.500"}} onClick={onClose}>
+                Cancel
+              </Button>
               <Button bg={"blue.400"} color={"white"} w={"full"} size={"sm"} _hover={{bg:"blue.500"}} onClick={handleEditProfile}>
                 Submit
               </Button>
