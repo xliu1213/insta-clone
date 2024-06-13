@@ -1,7 +1,14 @@
 import { Avatar, Button, Center, FormControl, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, Stack } 
   from "@chakra-ui/react"
+import { useState } from "react"
 
 const EditProfile = ({isOpen, onClose}) => {
+  const [inputs, setInputs] = useState({
+    fullName: '',
+    username: '',
+    bio: ''
+  })
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent bg={"black"} border={"1px solid gray"}>
@@ -17,19 +24,24 @@ const EditProfile = ({isOpen, onClose}) => {
             </Stack>
             <FormControl>
               <FormLabel fontSize={"sm"}>Full Name</FormLabel>
-              <Input placeholder="Full Name" size={"sm"} type="text" />
+              <Input placeholder="Full Name" size={"sm"} type="text" value={inputs.fullName}
+                onChange={(e) => setInputs({...inputs, fullName: e.target.value})} />
             </FormControl>
             <FormControl>
               <FormLabel fontSize={"sm"}>Username</FormLabel>
-              <Input placeholder="Username" size={"sm"} type="text" />
+              <Input placeholder="Username" size={"sm"} type="text" value={inputs.username}
+                onChange={(e) => setInputs({...inputs, username: e.target.value})} />
             </FormControl>
             <FormControl>
               <FormLabel fontSize={"sm"}>Bio</FormLabel>
-              <Input placeholder="Bio" size={"sm"} type="text" />
+              <Input placeholder="Bio" size={"sm"} type="text" value={inputs.bio} 
+                onChange={(e) => setInputs({...inputs, bio: e.target.value})} />
             </FormControl>
             <Stack spacing={6} direction={["column", "row"]}>
               <Button bg={"red.400"} color={"white"} w={"full"} size={"sm"} _hover={{bg:"red.500"}}>Cancel</Button>
-              <Button bg={"blue.400"} color={"white"} w={"full"} size={"sm"} _hover={{bg:"blue.500"}}>Submit</Button>
+              <Button bg={"blue.400"} color={"white"} w={"full"} size={"sm"} _hover={{bg:"blue.500"}} onClick={handleEditProfile}>
+                Submit
+              </Button>
             </Stack>
           </Stack>
         </ModalBody>
