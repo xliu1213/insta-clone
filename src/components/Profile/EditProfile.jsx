@@ -2,6 +2,7 @@ import { Avatar, Button, Center, FormControl, FormLabel, Heading, Input, Modal, 
   from "@chakra-ui/react"
 import { useRef, useState } from "react"
 import useAuthStore from '../../store/authStore'
+import usePreviewImg from "../../hooks/usePreviewImg"
 
 const EditProfile = ({isOpen, onClose}) => {
   const [inputs, setInputs] = useState({
@@ -11,6 +12,7 @@ const EditProfile = ({isOpen, onClose}) => {
   })
   const authUser = useAuthStore(state => state.user)
   const fileRef = useRef(null)
+  const {handleImageChange, selectedFile, setSelectedFile} = usePreviewImg()
   const handleEditProfile = () => {
     console.log(inputs)
   }
@@ -23,11 +25,11 @@ const EditProfile = ({isOpen, onClose}) => {
           <Stack spacing={4} p={6}>
             <Heading lineHeight={1.1} fontSize={{base:"2xl", sm:"3xl"}}>Edit Profile</Heading>
             <Stack direction={["column", "row"]} spacing={6}>
-              <Center><Avatar size={"xl"} src="" border={"2px solid white"} /></Center>
+              <Center><Avatar size={"xl"} src={selectedFile || authUser.profilePicURL} border={"2px solid white"} /></Center>
               <Center w={"full"}>
                 <Button w={"full"} onClick={() => fileRef.current.click()}>Edit Profile Picture</Button>
               </Center>
-              <Input type="file" hidden ref={fileRef} />
+              <Input type="file" hidden ref={fileRef} onChange={handleImageChange} />
             </Stack>
             <FormControl>
               <FormLabel fontSize={"sm"}>Full Name</FormLabel>
