@@ -15,11 +15,32 @@ const useFollowUser = (userId) => {
   const handleFollowUser = async () => {
     setIsUpdating(true)
     try {
-      const currentUserRef = doc(firestore, "users", authUser.uid)
+      const currentUserRef = doc(firestore, "users", user.uid)
       const userToFollowOrUnfollowRef = doc(firestore, "users", userId)
       await updateDoc(currentUserRef, {
         following: isFollowing ? arrayRemove(userId) : arrayUnion(userId)
       })
+      await updateDoc(userToFollowOrUnfollowRef, {
+        following: isFollowing ? arrayRemove(user.uid) : arrayUnion(user.uid)
+      })
+      if (isFollowing) {
+        // unfollow
+        setUser({
+          ...user,
+          following: user.following.filter(uid => uid !== userId)
+        })
+        setUserProfile({
+          ...userProfile,
+          followers: userProfile.followers.filter(uid => uid !== user.uid)
+        })
+        localStorage.setItem("user-info", JSON.stringify({
+          ...user,
+          following: user.following.filter(uid => uid !== userId)
+        }))
+        setIsFollowing(false)
+      } else {
+        // follow
+      }
     } catch (error) {
       showToast("Error", error.message, "error")
     } finally {
