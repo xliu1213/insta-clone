@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import useAuthStore from '../store/authStore'
 import useUserProfileStore from "../store/userProfileStore"
 import useShowToast from '../hooks/useShowToast'
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore"
+import { firestore } from '../firebase/firebase'
 
 const useFollowUser = (userId) => {
   const [isUpdating, setIsUpdating] = useState(false)
@@ -10,7 +12,20 @@ const useFollowUser = (userId) => {
   const {userProfile, setUserProfile} = useUserProfileStore()
   const showToast = useShowToast()
 
-  const handleFollowUser = async () => {}
+  const handleFollowUser = async () => {
+    setIsUpdating(true)
+    try {
+      const currentUserRef = doc(firestore, "users", authUser.uid)
+      const userToFollowOrUnfollowRef = doc(firestore, "users", userId)
+      await updateDoc(currentUserRef, {
+        following: isFollowing ? arrayRemove(userId) : arrayUnion(userId)
+      })
+    } catch (error) {
+      showToast("Error", error.message, "error")
+    } finally {
+      setIsUpdating(false)
+    }
+  }
 
   useEffect(() => {
     if (user) {
