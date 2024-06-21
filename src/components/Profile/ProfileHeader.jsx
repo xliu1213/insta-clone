@@ -2,6 +2,7 @@ import { Avatar, AvatarGroup, Button, Flex, Text, VStack, useDisclosure } from "
 import useUserProfileStore from "../../store/userProfileStore"
 import useAuthStore from '../../store/authStore'
 import EditProfile from "./EditProfile"
+import useFollowUser from "../../hooks/useFollowUser"
 
 const ProfileHeader = () => {
   const {userProfile} = useUserProfileStore()
@@ -9,6 +10,7 @@ const ProfileHeader = () => {
   const visitingOwnProfileAndAuth = authUser && authUser.username === userProfile.username
   const visitingAnotherProfileAndAuth = authUser && authUser.username !== userProfile.username
   const {isOpen, onOpen, onClose} = useDisclosure()
+  const {isFollowing, isUpdating, handleFollowUser} = useFollowUser(userProfile.uid)
 
   return <Flex gap={{base:4,sm:10}} py={10} direction={{base:"column", sm:"row"}}>
     <AvatarGroup size={{base:"xl",md:"2xl"}} mx={"auto"}>

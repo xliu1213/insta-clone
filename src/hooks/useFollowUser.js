@@ -40,6 +40,19 @@ const useFollowUser = (userId) => {
         setIsFollowing(false)
       } else {
         // follow
+        setUser({
+          ...user,
+          following: [...user.following, userId]
+        })
+        setUserProfile({
+          ...userProfile,
+          followers: [...userProfile.followers, user.uid]
+        })
+        localStorage.setItem("user-info", JSON.stringify({
+          ...user,
+          following: [...user.following, userId]
+        }))
+        setIsFollowing(true)
       }
     } catch (error) {
       showToast("Error", error.message, "error")
