@@ -10,7 +10,7 @@ const ProfileHeader = () => {
   const visitingOwnProfileAndAuth = authUser && authUser.username === userProfile.username
   const visitingAnotherProfileAndAuth = authUser && authUser.username !== userProfile.username
   const {isOpen, onOpen, onClose} = useDisclosure()
-  const {isFollowing, isUpdating, handleFollowUser} = useFollowUser(userProfile.uid)
+  const {isFollowing, isUpdating, handleFollowUser} = useFollowUser(userProfile?.uid)
 
   return <Flex gap={{base:4,sm:10}} py={10} direction={{base:"column", sm:"row"}}>
     <AvatarGroup size={{base:"xl",md:"2xl"}} mx={"auto"}>
@@ -25,8 +25,9 @@ const ProfileHeader = () => {
             </Button>
           )}
           {visitingAnotherProfileAndAuth && (
-            <Button bg={"blue.500"} color={"white"} _hover={{bg:"blue.600"}} size={{base:"xs",md:"sm"}}>
-              Follow
+            <Button bg={"blue.500"} color={"white"} _hover={{bg:"blue.600"}} size={{base:"xs",md:"sm"}}
+              onClick={handleFollowUser} isLoading={isUpdating}>
+                {isFollowing ? "Unfollow" : "Follow"}
             </Button>
           )}
       </Flex>

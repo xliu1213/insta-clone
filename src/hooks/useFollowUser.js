@@ -21,7 +21,7 @@ const useFollowUser = (userId) => {
         following: isFollowing ? arrayRemove(userId) : arrayUnion(userId)
       })
       await updateDoc(userToFollowOrUnfollowRef, {
-        following: isFollowing ? arrayRemove(user.uid) : arrayUnion(user.uid)
+        followers: isFollowing ? arrayRemove(user.uid) : arrayUnion(user.uid)
       })
       if (isFollowing) {
         // unfollow
