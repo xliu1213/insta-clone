@@ -16,6 +16,7 @@ import {
 import { SearchLogo } from "../../assets/constants"
 import useSearchUser from '../../hooks/useSearchUser'
 import { useRef } from "react"
+import SuggestedUser from "../SuggestedUsers/SuggestedUser"
 
 const Search = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
@@ -50,6 +51,7 @@ const Search = () => {
                 <Button type="submit" ml={"auto"} size={"sm"} my={4} isLoading={isLoading}>Search</Button>
               </Flex>
             </form>
+            {user && <SuggestedUser user={user} />}
           </ModalBody>
         </ModalContent>
       </Modal>
