@@ -15,13 +15,17 @@ import {
 } from "@chakra-ui/react"
 import { SearchLogo } from "../../assets/constants"
 import useSearchUser from '../../hooks/useSearchUser'
+import { useRef } from "react"
 
 const Search = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
   const {user, isLoading, getUserProfile} = useSearchUser()
+  const searchRef = useRef(null)
   const handleSearchUser = (e) => {
     e.preventDefault()
+    getUserProfile(searchRef.current.value)
   }
+  console.log(user)
 
   return (
     <>
@@ -40,7 +44,7 @@ const Search = () => {
             <form onSubmit={handleSearchUser}>
               <FormControl>
                 <FormLabel>Username</FormLabel>
-                <Input placeholder="asaprogrammer" ref={searchRef} />
+                <Input placeholder="xiyuan" ref={searchRef} />
               </FormControl>
               <Flex w={"full"} justifyContent={"flex-end"}>
                 <Button type="submit" ml={"auto"} size={"sm"} my={4} isLoading={isLoading}>Search</Button>
