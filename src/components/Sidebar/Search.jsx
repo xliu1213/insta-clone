@@ -20,7 +20,7 @@ import SuggestedUser from "../SuggestedUsers/SuggestedUser"
 
 const Search = () => {
   const {isOpen, onOpen, onClose} = useDisclosure()
-  const {user, isLoading, getUserProfile} = useSearchUser()
+  const {user, isLoading, getUserProfile, setUser} = useSearchUser()
   const searchRef = useRef(null)
   const handleSearchUser = (e) => {
     e.preventDefault()
@@ -51,7 +51,7 @@ const Search = () => {
                 <Button type="submit" ml={"auto"} size={"sm"} my={4} isLoading={isLoading}>Search</Button>
               </Flex>
             </form>
-            {user && <SuggestedUser user={user} />}
+            {user && <SuggestedUser user={user} setUser={setUser} />}
           </ModalBody>
         </ModalContent>
       </Modal>

@@ -25,7 +25,7 @@ const useSearchUser = () => {
     }
   }
 
-  return {isLoading, getUserProfile, user}
+  return {isLoading, getUserProfile, user, setUser}
 }
 
 export default useSearchUser
