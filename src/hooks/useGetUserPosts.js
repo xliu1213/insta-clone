@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import usePostStore from '../store/postStore'
 import useShowToast from './useShowToast'
-import { collection, query, where } from "firebase/firestore"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import { firestore } from "../firebase/firebase"
 
 const useGetUserPosts = () => {
@@ -17,6 +17,11 @@ const useGetUserPosts = () => {
       setPosts([])
       try {
         const q = query(collection(firestore, "posts"), where("createdBy", "==", userProfile.uid))
+        const querySnapshot = await getDocs(q)
+        const posts = []
+        querySnapshot.forEach(doc => {posts.push({...doc.data(), id: doc.id})})
+        posts.sort((a, b) => b.createdAt - a.createdAt)
+        setPosts(posts)
       } catch (error) {
         showToast("Error", error.message, "error")
         setPosts([])
@@ -24,7 +29,11 @@ const useGetUserPosts = () => {
         setIsLoading(false)
       }
     }
-  }, [])
+
+    getPosts()
+  }, [setPosts, userProfile, showToast])
+
+  return {isLoading, posts}
 }
 
 export default useGetUserPosts
