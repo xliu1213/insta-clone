@@ -76,4 +76,23 @@ function useCreatePost() {
   const createPost = usePostStore(state => state.createPost)
   const addPost = useUserProfileStore(state => state.addPost)
   const {pathname} = useLocation()
+
+  const handleCreatePost = async (selectedFile, caption) => {
+    if (!selectedFile) throw new Error("Please select an image")
+    setIsLoading(true)
+    const newPost = {
+      caption: caption,
+      likes: [],
+      comments: [],
+      createdAt: Date.now(),
+      createdBy: authUser.uid,
+    }
+    try {
+      
+    } catch (error) {
+      showToast("Error", error.message, "error")
+    } finally {
+      setIsLoading(false)
+    }
+  }
 }
