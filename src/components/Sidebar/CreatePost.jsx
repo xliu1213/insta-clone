@@ -34,6 +34,18 @@ const CreatePost = () => {
   const [caption, setCaption] = useState("")
   const imageRef = useRef(null)
   const {handleImageChange, selectedFile, setSelectedFile} = usePreviewImg()
+  const {isLoading, handleCreatePost} = useCreatePost()
+  const showToast = useShowToast()
+  const handlePostCreation = async () => {
+    try {
+      await handleCreatePost(selectedFile, caption)
+      onClose()
+      setCaption("")
+      setSelectedFile(null)
+    } catch (error) {
+      showToast("Error", error.message, "error")
+    }
+  }
 
   return (
     <>
@@ -62,7 +74,7 @@ const CreatePost = () => {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button mr={3}>Post</Button>
+            <Button mr={3} onClick={handlePostCreation} isLoading={isLoading}>Post</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -81,6 +93,7 @@ function useCreatePost() {
   const {pathname} = useLocation()
 
   const handleCreatePost = async (selectedFile, caption) => {
+    if (isLoading) return
     if (!selectedFile) throw new Error("Please select an image")
     setIsLoading(true)
     const newPost = {
@@ -100,6 +113,7 @@ function useCreatePost() {
       await updateDoc(postDocRef, {imageURL: downloadURL})
       newPost.imageURL = downloadURL
       createPost({...newPost, id: postDocRef.id})
+      addPost({...newPost, id: postDocRef.id})
       showToast("Success", "Post created successfully", "success")
     } catch (error) {
       showToast("Error", error.message, "error")
