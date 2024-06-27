@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Divider, Flex, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, 
+import { Avatar, Button, Divider, Flex, GridItem, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, 
   VStack, useDisclosure } from "@chakra-ui/react"
 import { AiFillHeart } from "react-icons/ai"
 import { FaComment } from "react-icons/fa"
@@ -7,11 +7,33 @@ import Comment from "../Comment/Comment"
 import PostFooter from "../FeedPosts/PostFooter"
 import useUserProfileStore from "../../store/userProfileStore"
 import useAuthStore from '../../store/authStore'
+import useShowToast from '../../hooks/useShowToast'
+import { useState } from "react"
+import { deleteObject, ref } from "firebase/storage"
+import { firestore, storage } from '../../firebase/firebase'
+import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore"
 
 const ProfilePost = ({post}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const userProfile = useUserProfileStore(state => state.userProfile)
   const authUser = useAuthStore(state => state.user)
+  const showToast = useShowToast()
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const handleDeletePost = async () => {
+    if (!window.confirm("Are you sure you want to delete this post?")) return 
+    try {
+      const imageRef = ref(storage, `posts/${post.id}`)
+      await deleteObject(imageRef)
+      await deleteDoc(doc(firestore, "posts", post.id))
+      const userRef = doc(firestore, "users", authUser.uid)
+      await updateDoc(userRef, {posts: arrayRemove(post.id)})
+    } catch (error) {
+      showToast("Error", error.message, "error")
+    } finally {
+      setIsDeleting(false)
+    }
+  }
 
   return <>
     <GridItem cursor={"pointer"} borderRadius={4} overflow={"hidden"} border={"1px solid whiteAlpha.300"}
@@ -48,8 +70,9 @@ const ProfilePost = ({post}) => {
                   <Text fontWeight={"bold"} fontSize={12}>{userProfile.username}</Text>
                 </Flex>
                 {authUser?.uid === userProfile.uid && (
-                  <Button _hover={{bg:"whiteAlpha.300", color:"red.600"}} borderRadius={4} p={1} size={"sm"} bg={"transparent"}>
-                    <MdDelete size={20} cursor={"pointer"} />
+                  <Button _hover={{bg:"whiteAlpha.300", color:"red.600"}} borderRadius={4} p={1} size={"sm"} bg={"transparent"}
+                    onClick={handleDeletePost}>
+                      <MdDelete size={20} cursor={"pointer"} />
                   </Button>
                 )}
               </Flex>
