@@ -1,6 +1,9 @@
 import { Flex, Text } from "@chakra-ui/react"
+import useGetUserProfileById from "../../hooks/useGetUserProfileById"
 
 const Comment = ({comment}) => {
+  const {userProfile, isLoading} = useGetUserProfileById(comment.createdBy)
+
   return <Flex gap={4}>
     {/* <Avatar src={profilePic} name={username} size={"sm"}/> */}
     <Flex direction={"column"}>
