@@ -12,6 +12,7 @@ import { useState } from "react"
 import { deleteObject, ref } from "firebase/storage"
 import { firestore, storage } from '../../firebase/firebase'
 import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore"
+import usePostStore from "../../store/postStore"
 
 const ProfilePost = ({post}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -20,6 +21,7 @@ const ProfilePost = ({post}) => {
   const showToast = useShowToast()
   const [isDeleting, setIsDeleting] = useState(false)
   const deletePost = usePostStore(state => state.deletePost)
+  const decrementPostsCount = useUserProfileStore(state => state.deletePost)
 
   const handleDeletePost = async () => {
     if (!window.confirm("Are you sure you want to delete this post?")) return 
@@ -31,6 +33,7 @@ const ProfilePost = ({post}) => {
       const userRef = doc(firestore, "users", authUser.uid)
       await updateDoc(userRef, {posts: arrayRemove(post.id)})
       deletePost(post.id)
+      decrementPostsCount(post.id)
       showToast("Success", "Post deleted successfully", "success")
     } catch (error) {
       showToast("Error", error.message, "error")
