@@ -19,15 +19,19 @@ const ProfilePost = ({post}) => {
   const authUser = useAuthStore(state => state.user)
   const showToast = useShowToast()
   const [isDeleting, setIsDeleting] = useState(false)
+  const deletePost = usePostStore(state => state.deletePost)
 
   const handleDeletePost = async () => {
     if (!window.confirm("Are you sure you want to delete this post?")) return 
+    if (isDeleting) return 
     try {
       const imageRef = ref(storage, `posts/${post.id}`)
       await deleteObject(imageRef)
       await deleteDoc(doc(firestore, "posts", post.id))
       const userRef = doc(firestore, "users", authUser.uid)
       await updateDoc(userRef, {posts: arrayRemove(post.id)})
+      deletePost(post.id)
+      showToast("Success", "Post deleted successfully", "success")
     } catch (error) {
       showToast("Error", error.message, "error")
     } finally {
@@ -71,7 +75,7 @@ const ProfilePost = ({post}) => {
                 </Flex>
                 {authUser?.uid === userProfile.uid && (
                   <Button _hover={{bg:"whiteAlpha.300", color:"red.600"}} borderRadius={4} p={1} size={"sm"} bg={"transparent"}
-                    onClick={handleDeletePost}>
+                    onClick={handleDeletePost} isLoading={isDeleting}>
                       <MdDelete size={20} cursor={"pointer"} />
                   </Button>
                 )}
