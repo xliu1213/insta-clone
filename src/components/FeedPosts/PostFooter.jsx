@@ -4,6 +4,7 @@ import { CommentLogo, NotificationsLogo, UnlikeLogo } from '../../assets/constan
 import useAuthStore from "../../store/authStore"
 import usePostComment from "../../hooks/usePostComment"
 import useLikePost from "../../hooks/useLikePost"
+import { timeAgo } from '../../utils/timeAgo'
 
 const PostFooter = ({post, creatorProfile, isProfilePage}) => {
   const {isCommenting, handlePostComment} = usePostComment()
@@ -25,6 +26,9 @@ const PostFooter = ({post, creatorProfile, isProfilePage}) => {
       <Box cursor={"pointer"} fontSize={18} onClick={() => commentRef.current.focus()}><CommentLogo /></Box>
     </Flex>
     <Text fontWeight={600} fontSize={"sm"}>{likes} likes</Text>
+    {isProfilePage && (
+      <Text fontSize={12} color={"gray"}>Posted {timeAgo(post.createdAt)}</Text>
+    )}
     {!isProfilePage && (
       <>
         <Text fontSize={"sm"} fontWeight={700}>
