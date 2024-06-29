@@ -22,11 +22,7 @@ const FeedPosts = () => {
         </VStack>
       ))}
 
-      {!isLoading && (
-        <>
-          
-        </>
-      )}
+      {!isLoading && posts.length > 0 && posts.map(post => <FeedPost key={post.id} post={post} />)}
     </Container>
   )
 }
