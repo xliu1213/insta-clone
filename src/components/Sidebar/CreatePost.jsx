@@ -91,6 +91,7 @@ function useCreatePost() {
   const createPost = usePostStore(state => state.createPost)
   const addPost = useUserProfileStore(state => state.addPost)
   const {pathname} = useLocation()
+  const userProfile = useUserProfileStore(state => state.userProfile)
 
   const handleCreatePost = async (selectedFile, caption) => {
     if (isLoading) return
@@ -112,8 +113,8 @@ function useCreatePost() {
       const downloadURL = await getDownloadURL(imageRef)
       await updateDoc(postDocRef, {imageURL: downloadURL})
       newPost.imageURL = downloadURL
-      createPost({...newPost, id: postDocRef.id})
-      addPost({...newPost, id: postDocRef.id})
+      if (authUser.uid === userProfile.uid) createPost({...newPost, id: postDocRef.id})
+      if (authUser.uid === userProfile.uid && pathname !== "/") addPost({...newPost, id: postDocRef.id})
       showToast("Success", "Post created successfully", "success")
     } catch (error) {
       showToast("Error", error.message, "error")
