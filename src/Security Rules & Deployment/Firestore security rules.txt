@@ -1,0 +1,29 @@
+Specify rules for the "users" collection.
+"{userId}" is a placeholder for any document ID within the "users" collection.
+Allow anyone to read documents in the "users" collection.
+Allows writing to a document in the "users" collection if the user is authenticated and the authenticated user's ID matches the document ID.
+This ensures users can only modify their own user document.
+
+Specifies rules for the "posts" collection.
+The "{postId}" is a placeholder for any document ID within the "posts" collection.
+Allows anyone to read documents in the "posts" collection.
+Allows creation of new documents in the "posts" collection if the user is authenticated.
+Allows updating a document in the "posts" collection if the user is authenticated and the authenticated user's ID matches the createdBy field of the document. This ensures that only the creator of the post can update it.
+Allows deleting a document in the "posts" collection if the user is authenticated and the authenticated user's ID matches the createdBy field of the document. This ensures that only the creator of the post can update it.
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  	match /users/{userId} {
+    	allow read;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    match /posts/{postId} {
+    	allow read;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && request.auth.uid == resource.data.createdBy;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.createdBy;
+    }
+  }
+}
