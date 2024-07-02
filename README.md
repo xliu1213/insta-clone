@@ -4,7 +4,7 @@ This is a clone of Instagram showcasing some of its core features, including use
 
 ### Demo Video
 
-For a quick demonstration of the application's features, watch this [video](https://link-to-your-video.com).
+For a quick demonstration of the application's features, watch this [video](https://youtu.be/qd3bTGNZt6Y).
 
 ## Testing it out!
 
