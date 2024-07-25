@@ -1,8 +1,24 @@
-# React + Vite
+# Instagram Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a clone of Instagram showcasing some of its core features, including user authentication, photo uploads, likes, and comments. It's built using React and Vite for the frontend and Firebase for the backend and authentication.
 
-Currently, two official plugins are available:
+### Demo Video
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+For a quick demonstration of the application's features, watch this [video](https://youtu.be/qd3bTGNZt6Y).
+
+## Testing it out!
+
+You can explore the features directly through the following link:
+
+[Instagram Clone](https://insta-clone-git-master-xliu1213s-projects.vercel.app)
+
+Feel free to log in with any of the following test accounts to play around with the app or create your own by signing up with Google or manually:
+
+- Email: mary123@yahoo.com, Password: 333666666
+- Email: bob456@yahoo.com, Password: 999999999
+- Email: johndoe@gmail.com, Password: 123456
+- Email: janedoe@gmail.com, Password: 123456
+
+## Acknowledgments
+
+- Thanks to [asaprogrammer](https://www.youtube.com/watch?v=RMScMwY2B6Q) for the tutorial.
