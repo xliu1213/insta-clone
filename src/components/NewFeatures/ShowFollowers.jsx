@@ -1,23 +1,13 @@
-import {
-  Avatar,
-  Flex,
-  Text,
-  VStack,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalOverlay,
-  Box,
-} from "@chakra-ui/react"
-
-const dummyFollowers = [
-  { id: 1, username: 'john_doe', profilePicURL: 'https://via.placeholder.com/150' },
-  { id: 2, username: 'jane_doe', profilePicURL: 'https://via.placeholder.com/150' },
-  { id: 3, username: 'user123', profilePicURL: 'https://via.placeholder.com/150' },
-];
+import { Text, VStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Box } from "@chakra-ui/react";
+import ShowFollower from './ShowFollower'; 
+import useAuthStore from "../../store/authStore";
+import useGetUserFollowers from "../../hooks/useGetUserFollowers";
 
 const ShowFollowers = ({ isOpen, onClose }) => {
+  const authUser = useAuthStore((state) => state.user)
+  const {isLoading, userFollowers} = useGetUserFollowers()
+  if (isLoading) return null
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -28,17 +18,14 @@ const ShowFollowers = ({ isOpen, onClose }) => {
             <Text fontSize={"xl"} fontWeight={"bold"}>Followers</Text>
           </Box>
           <VStack w={"full"} alignItems={"start"} maxH={"350px"} overflowY={"auto"} spacing={4}>
-            {dummyFollowers.map((follower) => (
-              <Flex key={follower.id} alignItems={"center"} w={"full"} p={2} borderRadius={4} _hover={{ bg: "whiteAlpha.200" }}>
-                <Avatar src={follower.profilePicURL} size={"sm"} name={follower.username} />
-                <Text fontWeight={"bold"} ml={4}>{follower.username}</Text>
-              </Flex>
+            {userFollowers.map(user => (
+              <ShowFollower follower={user} key={user.id} />
             ))}
           </VStack>
         </ModalBody>
       </ModalContent>
     </Modal>
-  )
-}
+  );
+};
 
-export default ShowFollowers
+export default ShowFollowers;
