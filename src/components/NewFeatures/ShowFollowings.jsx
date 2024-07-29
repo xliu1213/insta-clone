@@ -1,10 +1,10 @@
 import { Text, VStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Box } from "@chakra-ui/react";
-import ShowFollower from './ShowFollower'; 
-import useGetUserFollowers from "../../hooks/useGetUserFollowers";
+import ShowFollowing from './ShowFollowing'; 
+import useGetUserFollowing from "../../hooks/useGetUserFollowing";
 
-const ShowFollowers = ({ isOpen, onClose }) => {
-  const {isLoading, userFollowers} = useGetUserFollowers()
-  if (isLoading) return null
+const ShowFollowings = ({ isOpen, onClose }) => {
+  const {isLoading, userFollowings} = useGetUserFollowing();
+  if (isLoading) return null;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -13,11 +13,11 @@ const ShowFollowers = ({ isOpen, onClose }) => {
         <ModalCloseButton />
         <ModalBody pb={6}>
           <Box w={"full"} textAlign={"center"} mb={4}>
-            <Text fontSize={"xl"} fontWeight={"bold"}>Followers</Text>
+            <Text fontSize={"xl"} fontWeight={"bold"}>Followings</Text>
           </Box>
           <VStack w={"full"} alignItems={"start"} maxH={"350px"} overflowY={"auto"} spacing={4}>
-            {userFollowers.map(user => (
-              <ShowFollower follower={user} key={user.id} />
+            {userFollowings.map(user => (
+              <ShowFollowing following={user} key={user.id} />
             ))}
           </VStack>
         </ModalBody>
@@ -26,4 +26,4 @@ const ShowFollowers = ({ isOpen, onClose }) => {
   );
 };
 
-export default ShowFollowers;
+export default ShowFollowings;
